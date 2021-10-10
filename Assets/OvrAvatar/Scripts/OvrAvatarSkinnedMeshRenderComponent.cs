@@ -11,8 +11,8 @@ public class OvrAvatarSkinnedMeshRenderComponent : OvrAvatarRenderComponent
         
     internal void Initialize(ovrAvatarRenderPart_SkinnedMeshRender skinnedMeshRender, Shader surface, Shader surfaceSelfOccluding, int thirdPersonLayer, int firstPersonLayer, int sortOrder)
     {
-        this.surfaceSelfOccluding = surfaceSelfOccluding != null ? surfaceSelfOccluding :  Shader.Find("OvrAvatar/AvatarSurfaceShaderSelfOccluding");
-        this.surface = surface != null ? surface : Shader.Find("OvrAvatar/AvatarSurfaceShader");
+        this.surfaceSelfOccluding = surfaceSelfOccluding != null ? surfaceSelfOccluding :  Shader.Find("OvrAvatar/Content/Materials/AvatarSurfaceShaderSelfOccluding");
+        this.surface = surface != null ? surface : Shader.Find("OvrAvatar/Content/Materials/AvatarSurfaceShaderPBS");
         this.mesh = CreateSkinnedMesh(skinnedMeshRender.meshAssetID, skinnedMeshRender.visibilityMask, thirdPersonLayer, firstPersonLayer, sortOrder);
         bones = mesh.bones;
         UpdateMeshMaterial(skinnedMeshRender.visibilityMask, mesh);
