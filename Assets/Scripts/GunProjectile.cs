@@ -19,7 +19,7 @@ public class GunProjectile : MonoBehaviour
     public int damage;
 
     //gun stats
-    public float timeBtwnShooting, spread, reloatTime, timeBtwnShots;
+    public float timeBtwnShooting, spread, timeBtwnShots;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
@@ -50,6 +50,8 @@ public class GunProjectile : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
         animator = transform.Find("Model").GetComponent<Animator>();
+
+        particleSystem = transform.Find("MuzzleFlashEffect").GetComponent<ParticleSystem>();
     }
 
     private void Update() {
@@ -85,8 +87,9 @@ public class GunProjectile : MonoBehaviour
         }
     }
 
-    private void Shoot()
+    public void Shoot()
     {
+        Debug.Log("Debug: Shoot");
         readyToShoot = false;
         audioSource.PlayOneShot(audioSource.clip);
         animator.SetTrigger("Fire");
@@ -95,14 +98,19 @@ public class GunProjectile : MonoBehaviour
         Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
+        Vector3 origin = particleSystem.transform.position;
+        Vector3 direction = particleSystem.transform.right;
+
         //check if ray hits
         Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(origin, direction, out hit, 100f))
         {
+            Debug.Log("Debug: Raycast hit");
             targetPoint = hit.point;
             GameObject hitObject = hit.collider.gameObject;
             if (hitObject.CompareTag("Monster"))
             {
+                Debug.Log("Debug: Raycast hit monster");
                 Monster monsterScript = hitObject.GetComponent<Monster>();
                 monsterScript.Hurt(damage);
             }

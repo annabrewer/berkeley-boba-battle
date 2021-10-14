@@ -23,11 +23,13 @@ public class Hand : MonoBehaviour {
         handTriggerState = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, controller);
 
         if (holdingGun) {
-            Gun gunScript = gun.GetComponent<Gun>();
-            gunScript.SetTriggerRotation(indexTriggerState);
+            Gun oldGunScript = gun.GetComponent<Gun>();
+            oldGunScript.SetTriggerRotation(indexTriggerState);
+
+            GunProjectile gunScript = gun.GetComponent<GunProjectile>();
 
             if (indexTriggerState > 0.9f && oldIndexTriggerState < 0.9f)
-                gunScript.Fire();
+                gunScript.Shoot();
 
             if (handTriggerState < 0.9f)
                 Release();
@@ -41,6 +43,8 @@ public class Hand : MonoBehaviour {
             }
         }
     }
+
+
 
     void Grab(GameObject obj) {
         holdingGun = true;

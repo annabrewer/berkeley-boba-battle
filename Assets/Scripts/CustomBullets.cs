@@ -57,13 +57,13 @@ public class CustomBullets : MonoBehaviour
             enemies[i].GetComponent<Monster>().Hurt(explosionDamage);
 
         }
-        Invoke("Delay", 0.05f);
+        //Invoke("Delay", 0.05f);
     }
 
-    private void Delay()
+    /*private void Delay()
     {
         Destroy(gameObject);
-    }
+    }*/
 
     private void OnCollisionEnter(Collision collision)
     {
